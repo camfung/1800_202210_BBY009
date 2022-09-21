@@ -1,11 +1,13 @@
 ## My Web Application (Add your Title here)
-Hi my name is Cameron i am excited to make a dope project
+
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Contents](#content)
 
 ## General Info
 This browser based web application to ...
+Hi my name is Cameron i am excited to make a dope project
+
 	
 ## Technologies
 Technologies used for this project:
