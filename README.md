@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+* Hi my name is Daniel. I'm excited about this project because meeting and working with new people is always a good time.
 	
 ## Technologies
 Technologies used for this project:
