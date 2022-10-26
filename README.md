@@ -10,7 +10,7 @@ This browser based web application to ...
 * Hi my name is Cameron i am excited to make a dope project
 * Hi my name is Daniel. I'm excited about this project because meeting and working with new people is always a good time.
 =======
-
+Hi my name is Cameron i am excited to make a dope project
 
 >>>>>>> 9e5a297c9f9b94f06b742b628e2e3db1edc18fea
 	
