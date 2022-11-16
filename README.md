@@ -8,10 +8,6 @@
 This browser based web application to ...
 * Hi my name is Cameron i am excited to make a dope project
 * Hi my name is Daniel. I'm excited about this project because meeting and working with new people is always a good time.
-* Hi my name is Kavin. I'm excited about trying to make a new piece of useful software.
-
-
-
 
 	
 ## Technologies
