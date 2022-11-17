@@ -1,4 +1,4 @@
 .DS_Store
 *.logs
-node_modules/
 .vscode/
+firebaseAPI_team09.js
