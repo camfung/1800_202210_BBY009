@@ -30,6 +30,7 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
+    <link rel="stylesheet" href="./styles/styles.css">
     <!-------------------------------------------->
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
@@ -39,79 +40,20 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <img src="./images/Spotify.png" width="60" height="60" class="d-inline-block align-top" alt="">
-        <a class="navbar-brand" href="#"><text-align:center>Caviel playlist image </text-align:center></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">API'S <span class="sr-only"></span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Donate</a>
-            </li>
-          </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Community</a>
-            </li>
-          </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Settings</a>
-            </li>
-          </ul>
-
-          <span class="navbar-text">
-
-          </span>
-        </div>
-      </nav>
+    <div class="nav-landing"></div>
 
     <!-- the body of your page goes here -->
-    <header>
-      <!-- Navbar -->
-  
-        
-        
- 
-          </div>
-        </div>
-      </nav>
-      <!-- Navbar -->
-    
-      <!-- Background image -->
-      <div class="p-5 text-center  bg-image" style="
-          background-image: url('./images/islandc.png');
-         width: 100%; height: 900px; background-repeat: no-repeat;
-        ">
-        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
-          <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="text-white">
-              <h1 class="mb-3">Caviel AI Image Generator</h1>
-              <h4 class="mb-3">"Creativity unleashed"</h4>
-              <a class="btn btn-outline-light btn-lg" href="#!" role="button">Link your Spotify</a>
-            </div>
-          </div>
-        </div>
+
+    <div class="header">
+      <div class="hero">
+        <h1>CoverAI</h1>
+        <p>Unique Album covers at the click of a button.</p>
       </div>
-      <!-- Background image -->
-    </header>
-    <div class="bg-dark text-secondary px-4 py-5 text-center">
-      <div class="py-5">
-        <h1 class="display-5 fw-bold text-white">Log in to access our Spotify AI image generator</h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="fs-5 mb-4">Log in by linking your Spotify account!</p>
-          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" onclick="redirect('/login')">Log In</button>
-            <button type="button" class="btn btn-outline-light btn-lg px-4">Guide</button>
-          </div>
-        </div>
-      </div>
+    </div>
+
+    <div class="card bg-dark text-white" id="login">
+        <p>Create an account with us to start making covers.</p>        
+        <button onclick="redirect('./login')">Log In</button>
     </div>
 
     <div class="card bg-dark text-white">
@@ -210,6 +152,7 @@
             <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
             <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
           </ul>
+
         </footer>
       </div>
 
