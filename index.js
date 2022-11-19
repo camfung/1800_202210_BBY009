@@ -4,7 +4,8 @@ const app = express();
 const fs = require("fs");
 const axios = require("axios");
 const qs = require("querystring");
-const { send } = require("process");
+
+const { JSDOM } = require("jsdom");
 
 let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
@@ -13,7 +14,6 @@ CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
 CLIENT_SECRET = "00fd5784702d444cbe115553c19bb005";
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
-
 
 axios.defaults.baseURL = 'https://api.spotify.com/v1';
 axios.defaults.headers['Authorization'] = `Bearer ${access_token}`;
@@ -35,15 +35,11 @@ app.get("/main" , (req, res) => {
     sendHtml("main", res);
 })
 
-app.get("/playlists", (req, res) => {
-    sendHtml("playlists", res);
-  })
-
 /**
  * End point that gets code from spoftify in 
  * preparation for requesting the auth token.
  */
-app.get("/spotifyLogin", (req, res) => {
+ app.get("/spotifyLogin", (req, res) => {
     const state = generateRandomString(16);
     const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative"
     res.cookie(stateKey, state);
@@ -67,7 +63,7 @@ app.get("/spotifyLogin", (req, res) => {
  * Exchanges the code for the access token. 
  * Saves the access token into access_token.
  */
-app.get("/callback", (req, res) => {
+ app.get("/callback", (req, res) => {
     const code = req.query.code || null;
 
     axios({
@@ -86,11 +82,12 @@ app.get("/callback", (req, res) => {
         .then(response => {
           if (response.status === 200) {
             access_token = response.data.access_token;
+            // getPlaylists(res);
+            
+            sendHtml("main", res)
+            
 
-            // res.send(access_token)
-            res.redirect("/get_playlists")
-            // res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-          } else {
+        } else {
             res.send(response);
           }
         })
@@ -99,8 +96,7 @@ app.get("/callback", (req, res) => {
         });
     });
 
-app.get("/get_playlists", (req, res) => {
-
+app.get("/getPlaylists", (req, res) => {
     axios({
         method: 'get',
         url: 'https://api.spotify.com/v1/me/playlists?limit=20&offset=0',
@@ -110,32 +106,32 @@ app.get("/get_playlists", (req, res) => {
         }
     })
     .then(response => {
-        // let data = [];
-        // console.log(response.data.items)
-        // for (let i = 0 ; i < Object.keys(response.data.items).length; i++){
-        //     data.push({
-        //       name: response.data.items[i].name,
-        //       imageLink: response.data.items[i].images[0].url,
-        //       trackUrl: response.data.items[i].tracks.href,
-        //     });
-        //   }    
-        //   let json = JSON.stringify(data);
-        fs.writeFileSync("./data/playlistsNames.json", JSON.stringify(response.data.items));
-
-        let doc = fs.readFileSync("html/playlistsLanding.html", "utf-8")
-        res.send(doc);
-        // res.redirect(`/get_playlist_tracks?href=${response.data.items[0].href}`)
+        let data = [];
+        let numItems = Object.keys(response.data.items).length
+        
+        for (let i = 0 ; i < numItems; i++){
+            data.push({
+                name: response.data.items[i].name,
+                imageUrl: response.data.items[i].images[0].url,
+                trackUrl: response.data.items[i].tracks.href,
+            });
+        }    
+        res.send(data);
     })
     .catch(error => {
         res.send(error)
     })
-    });
-      
-app.get("/get_playlists_json", (req, res) => {
-  let playlists_json = fs.readFileSync("data/playlistsNames.json");
-  let playlists_json_parsed = JSON.parse(playlists_json);
-  res.send(playlists_json_parsed);
 })
+
+app.get("/tracks", (req, res) => {
+  console.log(req.query.name);
+  res.send("")
+})
+
+let sendHtml = (url, res) => {
+    let doc = fs.readFileSync("html/" + url + ".html", "utf-8");
+    res.send(doc);
+}
 
 /**
  * Generates a random string containing numbers and letters
@@ -152,39 +148,7 @@ app.get("/get_playlists_json", (req, res) => {
   };
 
 
-app.get("/get_playlist_tracks", (req, res) => {
-  let href = req.query.href
-  console.log(href)
-  axios({
-    method: 'get',
-    url: href + "/tracks?fields=items(track(name))",
-    headers: {
-      "Accept" : "application/json",
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${access_token}`,
-    }
-  })
-  .then(response => {
-    data = [];
-    for (let i =0 ; i < 50; i++){
-      data.push(response.data.items[i].track.name)
-    }
-    res.send(data);
-  })
-  .catch(error => {
-    res.send(error)
-  })
-})
-
-let sendHtml = (url, res) => {
-    let doc = fs.readFileSync("html/" + url + ".html", "utf-8");
-    res.send(doc);
-}
-
-
-
 let port = 8000;
 app.listen(port, () => {
     console.log("server running on http://localhost:" + port)
 })
-

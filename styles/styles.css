@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+}
+
+/*-------------------------------------
+ * customize material design icon sizes 
+ *-------------------------------------
+ */
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background-color: rgb(34, 37, 41);
+}
+
+.header {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    padding: 50% 0;
+    
+    background-image: url("./images/index-background.png");
+    background-size: cover;
+
+    color: white;
+}
+
+#login{
+    color: white;
+    margin: 0 auto;
+    padding: 5%;
+    text-align: center;
+}
+
+#login > button {
+    width: 50%;
+    margin: 0 auto;
+
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: .5em;
+}
+
+header {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+    padding: 2% 5%;
+    margin: 0 2%;
+    background-color: rgb(34, 37, 41);
+    color: white;
+    border-bottom: solid antiquewhite 1px;
+}
+
+header a {
+    padding: 2%;
+    
+    color: white;
+    text-decoration: none;
+
+}
+
+#playlists-wrapper {
+    background-color: rgb(34, 37, 41);
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.playlist {
+    width: 47%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2%;
+    margin: 2% 0;
+    border: rgb(137, 137, 137) solid .3em;
+    border-radius: .5em;
+    color: white;
+}
+/* 
+.playlist h2 {
+    margin: 5%;
+} */
+
+.playlist img {
+    width: 100%;
+}
