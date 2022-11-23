@@ -5,7 +5,11 @@ const fs = require("fs");
 const axios = require("axios");
 const qs = require("querystring");
 
-const { JSDOM } = require("jsdom");
+const { Configuration, OpenAIApi } = require("openai");
+
+const openai = require("openai");
+const { send } = require("process");
+
 
 let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
@@ -40,14 +44,14 @@ app.get("/main" , (req, res) => {
  * preparation for requesting the auth token.
  */
  app.get("/spotifyLogin", (req, res) => {
-    const state = generateRandomString(16);
+    // const state = generateRandomString(16);
     const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative"
-    res.cookie(stateKey, state);
+    // res.cookie(stateKey, state);
     const queryParams = qs.stringify({
         client_id : CLIENT_ID, 
         response_type: "code", 
         redirect_uri: REDIRECT_URI, 
-        state: state,
+        // state: state,
         scope: scope,
     });
 
@@ -82,7 +86,6 @@ app.get("/main" , (req, res) => {
         .then(response => {
           if (response.status === 200) {
             access_token = response.data.access_token;
-            // getPlaylists(res);
             
             sendHtml("main", res)
             
@@ -123,14 +126,86 @@ app.get("/getPlaylists", (req, res) => {
     })
 })
 
-app.get("/tracks", (req, res) => {
-  console.log(req.query.name);
-  res.send("")
+app.get("/playlist-view", (req, res) => {
+  sendHtml("playlist", res);
 })
+
+app.get("/playlist-tracks", (req, res) => {
+  // sendHtml("playlist", res)
+  let href = req.query.href
+  axios({
+    method: 'get',
+    url: href + "?fields=items(track(name))",
+    headers: {
+      "Accept" : "application/json",
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${access_token}`,
+    }
+  })
+  .then( async response => {
+    data = [];
+    let numSongs = response.data.items.length;
+    for (let i = 0 ; i < numSongs; i++){
+      data.push(response.data.items[i].track.name)
+    }
+    let prompt = ""
+    for (let i = 0; i < 5; i++) {
+      let r = getRandomInt(numSongs);
+      prompt += data[r] + " "
+    }
+    console.log(prompt)
+    prompt += "album cover"
+
+    let key = "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";
+    const configuration = new Configuration({
+      apiKey: key
+  });
+  const openai = new OpenAIApi(configuration);
+
+  predict(prompt, openai)
+    .then(
+        response => {
+            const now = Date.now();
+            let images = [];
+            let filename;
+            for (let i = 0; i < response.data.length; i++)
+            {
+                const b64 = response.data[i]['b64_json'];
+                const buffer = Buffer.from(b64, "base64");
+                filename = `./images/aiImages/image_${now}_${i}.png`;
+                fs.writeFileSync(filename, buffer);
+            }
+            res.send(filename)
+        }
+    )
+  })
+  .catch(error => {
+    console.log(error) 
+    res.send(error)
+  })
+
+})
+
+
+const predict = async function (prompt, openai) {
+  const response = await openai.createImage({
+    prompt: prompt,
+    n: 1,
+    size: "1024x1024",
+    // size: "1024x1024",
+    response_format: 'b64_json',
+  });
+  
+  return response.data;
+}
 
 let sendHtml = (url, res) => {
     let doc = fs.readFileSync("html/" + url + ".html", "utf-8");
     res.send(doc);
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
 /**
@@ -152,5 +227,3 @@ let port = 8000;
 app.listen(port, () => {
     console.log("server running on http://localhost:" + port)
 })
-
-// this is a commet
