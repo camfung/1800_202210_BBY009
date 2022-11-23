@@ -18,3 +18,6 @@ const firebaseConfig = {
 //--------------------------------------------
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+// Create a root reference
+var storageRef = firebase.storage().ref();
+
