@@ -59,6 +59,7 @@ app.get("/main" , (req, res) => {
     let data = {
         url: authorize + "?" + queryParams
     }
+    console.log("/spotify login")
     res.send(data);
 })
 
@@ -69,7 +70,7 @@ app.get("/main" , (req, res) => {
  */
  app.get("/callback", (req, res) => {
     const code = req.query.code || null;
-
+    console.log("code " + code)
     axios({
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
@@ -86,11 +87,12 @@ app.get("/main" , (req, res) => {
         .then(response => {
           if (response.status === 200) {
             access_token = response.data.access_token;
-            
+            console.log("access token " + response.data.access_token)
             sendHtml("main", res)
             
 
         } else {
+
             res.send(response);
           }
         })

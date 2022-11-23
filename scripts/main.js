@@ -8,7 +8,7 @@ if (localStorage.login === "true") {
     xhr.onload = function() {
         doc = JSON.parse(this.responseText);
         const template = document.querySelector("#playlist-template");
-        console.table(doc)
+        console.log(doc)
         // console.log(doc[0].images[0].imageUrl)
         document.querySelector("#playlists-holder").innerHTML = "";
         for (let i = 0 ; i < doc.length; i++){
