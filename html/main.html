@@ -11,6 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <!------------------------------------------>
     <!-- Bootstrap Library CSS JS CDN go here -->
     <!------------------------------------------>
@@ -30,13 +31,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
     <!-------------------------------------------->
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 
 </head>
 
@@ -47,46 +49,32 @@
     <a href="">playlists</a>
     
   </nav> -->
-  <div id="playlists-wrapper">
+  <div id="main-wrapper">
     <header>
       <h1>Your Playlists</h1>
-      <a onclick="callServer()">Link your spotify</a>
+      <a onclick="callServer()" id="link">Link your spotify</a>
     </header>
   
-    <main>
-      <template id="playlist-template">
-        <form action="" class="playlist">
-          <img src="./images/island.png" alt="" id="playlist-image">
-          <h2 id="playlist-name">Name</h2>
-        </form>
-      </template>
+    <main id="playlists-holder">
 
-      <div class="playlist">
-  
-        <img src="./images/island.png" alt="">
-        <h2>name</h2>
-        
-      </div>
-
-      <div class="playlist">
-  
-        <img src="./images/island.png" alt="">
-        <h2>name</h2>
-        
-      </div>
 
     </main>
   </div>
+  <template id="playlist-template">
 
+    <div class="playlist">
+      <img src="" alt="No image available for this playlist" class="playlist-image">
+      <h2 class="playlist-name">Name</h2>
+    </div>
+
+  </template>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
-    <script src="./scripts/firebaseAPI_TEAM99.js"></script>
-    <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/main.js"></script>
-    <script src="./scripts/playlists.js"></script>
+    <script src="./scripts/firebaseAPI_TEAM09.js"></script>
+    <script src="./scripts/redirect.js"></script>
+    <script src="./scripts/main.js" defer></script>
 
 </body>
 
