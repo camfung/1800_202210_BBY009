@@ -2,3 +2,4 @@
 *.logs
 .vscode/
 firebaseAPI_team09.js
+node_modules
