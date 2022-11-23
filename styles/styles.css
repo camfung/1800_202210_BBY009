@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    color: white;
 }
 
 /*-------------------------------------
@@ -20,6 +21,12 @@ body {
     background-color: rgb(34, 37, 41);
 }
 
+.index-wrapper {
+    display: grid;
+    grid-template-rows: 5fr 1fr;
+    height: 100vh;
+}
+
 .header {
     width: 100%;
     margin: 0 auto;
@@ -31,6 +38,13 @@ body {
     background-size: cover;
 
     color: white;
+
+
+}
+
+#description {
+    margin: 0 5%;
+    padding: 0 10%;
 }
 
 #login{
@@ -57,7 +71,6 @@ header {
     padding: 2% 5%;
     margin: 0 2%;
     background-color: rgb(34, 37, 41);
-    color: white;
     border-bottom: solid antiquewhite 1px;
 }
 
@@ -73,14 +86,13 @@ header a {
     background-color: rgb(34, 37, 41);
 }
 
-main {
+#playlists-holder {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .playlist {
-    width: 47%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,11 +102,72 @@ main {
     border-radius: .5em;
     color: white;
 }
+
+.playlist:hover, #link:hover {
+    cursor: pointer;
+}
 /* 
 .playlist h2 {
     margin: 5%;
 } */
 
+
 .playlist img {
     width: 100%;
+}
+
+#playlist-main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 5% 0 ;
+
+}
+
+#playlist-main img {
+    width: 60%;
+    height: auto; 
+    margin: 0 5%;  
+}
+
+#buttons-playlists button {
+    display: block;
+    color: black;
+}
+
+.button1{
+    display:inline-block;
+    padding:0.35em 1.2em;
+    border: rgb(137, 137, 137) solid .1em;
+    border-radius: .5em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color: black;
+    background-color:rgb(137, 137, 137);
+    text-align:center;
+    transition: all 0.2s;
+    }
+    a.button1:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+    }
+
+@media only screen and (min-width: 768px) {
+    .playlist {
+        width: 24%;
+    
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+    .playlist {
+        width: 47%;
+
+    }
+
 }
