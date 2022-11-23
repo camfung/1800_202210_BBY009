@@ -15,7 +15,7 @@ let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
-CLIENT_SECRET = "00fd5784702d444cbe115553c19bb005";
+CLIENT_SECRET = "";
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
 
@@ -158,7 +158,7 @@ app.get("/playlist-tracks", (req, res) => {
     console.log(prompt)
     prompt += "album cover"
 
-    let key = "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";
+    let key = "";
     const configuration = new Configuration({
       apiKey: key
   });
