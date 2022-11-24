@@ -16,6 +16,7 @@ const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
 CLIENT_SECRET = "";
+
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
 
@@ -29,6 +30,10 @@ app.use("/images", express.static("./images"));
 
 app.get("/", (req, res) => {
     sendHtml("index", res);
+})
+
+app.get("/index", (req, res) => {
+  sendHtml("index", res);
 })
 
 app.get("/login", (req, res) => {
@@ -88,6 +93,7 @@ app.get("/main" , (req, res) => {
             access_token = response.data.access_token;
             
             sendHtml("main", res)
+
             
 
         } else {
@@ -98,6 +104,10 @@ app.get("/main" , (req, res) => {
           res.send(error);
         });
     });
+
+app.get("/access_token", (req, res) => {
+  res.send(access_token)
+})
 
 app.get("/getPlaylists", (req, res) => {
     axios({

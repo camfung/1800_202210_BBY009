@@ -30,6 +30,16 @@ if (localStorage.login === "true") {
             newEle.querySelector(".playlist").onclick = () => getSongs(trackUrl, imageUrl, name); 
             document.querySelector("#playlists-holder").appendChild(newEle);
         }
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            // doc = JSON.parse(this.responseText);
+            let doc = this.responseText;
+            localStorage.access_token = doc;
+        }
+        
+        xhr.open("GET", "http://localhost:8000/access_token");
+        xhr.send();   
+
     }
 
     xhr.open("GET", "http://localhost:8000/getPlaylists");
@@ -68,6 +78,13 @@ ready(() => {
                     document.querySelector("#playlists-holder").appendChild(newEle);
                 });
             })
+
+            currentUser.get().then(userDoc => {
+                let userName = userDoc.data().name;
+
+                let nameSpan = document.getElementById("name-here").innerHTML = userName + "'s Playlists"
+            })
+
         } else {
     
         }
