@@ -167,6 +167,34 @@ header a {
     background-color:#FFFFFF;
     }
 
+
+/* loading bar */
+#percentage {
+    text-align: center;
+    
+}
+
+#progress-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#myProgress {
+    width: 90%;
+    background-color: grey;
+    border-radius: 1em;
+}
+
+#myBar {
+    border-radius: 1em;
+    width: 5%;
+    height: 30px;
+    background-color: #1E152A;
+
+}
+
+
 @media only screen and (min-width: 768px) {
     .playlist {
         width: 24%;
@@ -202,3 +230,4 @@ header a {
         
     }
 }
+
