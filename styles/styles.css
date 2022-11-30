@@ -178,6 +178,7 @@ header a {
     display: flex;
     justify-content: center;
     align-items: center;
+    display: none;
 }
 
 #myProgress {
@@ -191,7 +192,6 @@ header a {
     width: 5%;
     height: 30px;
     background-color: #1E152A;
-
 }
 
 
@@ -229,5 +229,25 @@ header a {
         background-color: hsla(0, 0%, 0%, 0.395);
         
     }
+
+    #select-song {
+        display: flex;
+        gap: 2%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #select-song img {
+        width: 90%;
+    }
+    #select-song img:hover {
+        opacity: 0.5;
+        width: 90%;
+    }
+
+    #load-image {
+        text-align: center;
+    }
 }
 
+  

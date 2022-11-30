@@ -15,7 +15,7 @@ let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
-CLIENT_SECRET = "";
+CLIENT_SECRET = "00fd5784702d444cbe115553c19bb005";
 
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
@@ -142,6 +142,19 @@ app.get("/playlist-view", (req, res) => {
   sendHtml("playlist", res);
 })
 
+app.get("/tester", (req, res) => {
+  let doc = [
+    [
+      './images/aiImages/image_1669764001811_0.png',
+      './images/aiImages/image_1669764001811_1.png',
+      './images/aiImages/image_1669764001811_2.png',
+      './images/aiImages/image_1669764001811_3.png'
+    ],
+    'Playground Lose Someone Westcoast Collective Figure It Out Lose Someone album cover'
+  ]
+  res.send(doc)
+})
+
 app.get("/playlist-tracks", (req, res) => {
   // sendHtml("playlist", res)
   let href = req.query.href
@@ -161,14 +174,16 @@ app.get("/playlist-tracks", (req, res) => {
       data.push(response.data.items[i].track.name)
     }
     let prompt = ""
+    var songs = []
     for (let i = 0; i < 5; i++) {
       let r = getRandomInt(numSongs);
       prompt += data[r] + " "
+      songs.push(data[r]);
     }
     console.log(prompt)
     prompt += "album cover"
 
-    let key = "";
+    let key = "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";
     const configuration = new Configuration({
       apiKey: key
   });
@@ -179,21 +194,26 @@ app.get("/playlist-tracks", (req, res) => {
         response => {
             const now = Date.now();
             let images = [];
-            let filename;
+            let filenames = [];
             for (let i = 0; i < response.data.length; i++)
             {
                 const b64 = response.data[i]['b64_json'];
                 const buffer = Buffer.from(b64, "base64");
-                filename = `./images/aiImages/image_${now}_${i}.png`;
-                fs.writeFileSync(filename, buffer);
+                filenames[i] = `./images/aiImages/image_${now}_${i}.png`;
+                fs.writeFileSync(filenames[i], buffer);
             }
-            res.send(filename)
+
+            let songsAndFile = [filenames, prompt]
+            console.log(songsAndFile)
+
+            res.send(songsAndFile);
         }
     )
   })
   .catch(error => {
+    console.log('this is an error')
     console.log(error) 
-    res.send(error)
+    res.send("there was a problem")
   })
 
 })
@@ -202,7 +222,7 @@ app.get("/playlist-tracks", (req, res) => {
 const predict = async function (prompt, openai) {
   const response = await openai.createImage({
     prompt: prompt,
-    n: 1,
+    n: 4,
     size: "1024x1024",
     // size: "1024x1024",
     response_format: 'b64_json',
