@@ -183,7 +183,7 @@ app.get("/playlist-tracks", (req, res) => {
     console.log(prompt)
     prompt += "album cover"
 
-    let key = "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";
+    let key = "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";
     const configuration = new Configuration({
       apiKey: key
   });
