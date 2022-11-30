@@ -15,3 +15,5 @@ const callServer = () => {
     xhr.open("GET", "http://localhost:8000/spotifyLogin");
     xhr.send();
 }
+
+
