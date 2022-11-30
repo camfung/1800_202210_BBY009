@@ -230,5 +230,20 @@ header a {
         
     }
 
+    #select-song {
+        display: flex;
+        gap: 2%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #select-song img {
+        width: 90%;
+    }
+    #select-song img:hover {
+        opacity: 0.5;
+        width: 90%;
+    }
+
 }
 
