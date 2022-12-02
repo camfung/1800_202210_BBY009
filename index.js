@@ -13,8 +13,8 @@ let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
-CLIENT_SECRET = "00fd5784702d444cbe115553c19bb005";
-OPEN_AI_KEY = "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"; 
+CLIENT_SECRET = "";
+OPEN_AI_KEY = ""; 
 
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
