@@ -25,8 +25,11 @@ Technologies used for this project:
 Content of the project folder:
 
  Top level of project folder: 
+
 ├── .gitignore               # Git ignore file
-├── package.json             # holds the information about the node project. 
+
+├── package.json             # holds the information about the node project.
+
 └── README.md
 
 
@@ -36,17 +39,15 @@ index.html                   # landing page of the site.
 login.html                   # login to the firebase backend.
 main.html                    # where the user views their playlists.
 playlist.html                # user generates image here.
+
 ├── images \ aiImages        # holds the images generated for the user.
+
 ├── scripts                  # holds the client side js scripts
 authentication.js            # communicates with the firebase backend and logs the user in.
 firebaseAPI_Team09.js        # client info for firebase
 main.js                      # communicates with the node server and 
 playlist.js                  # makes a call to the node server asking it to make a call to the dalle api.
 redirect.js                  # helper functions to redirect to other pages.
-
-
-Firebase hosting files: 
-├── .firebaserc...
 
 
 Server Files:
