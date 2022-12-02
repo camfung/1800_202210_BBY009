@@ -1,7 +1,7 @@
+// if the user is logged in to firebase go and get the 
+// playlists saved on their account.
 if (localStorage.login === "true") {
     console.log("logged in")
-
-    
     let doc;
     const xhr = new XMLHttpRequest();
     // console.log("xhr", xhr);
@@ -26,7 +26,7 @@ if (localStorage.login === "true") {
                 songs : [],
                 trackUrl : trackUrl
             }
-            // writePlaylists(name, data);
+            writePlaylists(name, data);
             newEle.querySelector(".playlist").onclick = () => getSongs(trackUrl, imageUrl, name); 
             document.querySelector("#playlists-holder").appendChild(newEle);
         }
@@ -46,6 +46,8 @@ if (localStorage.login === "true") {
     xhr.send();
 }
 
+// making a request for the playlist page with
+// the song and image so that they can be displayed. 
 const getSongs = (url, img, name) =>{
     localStorage.setItem("name", name)
     localStorage.setItem("song", url)
@@ -57,11 +59,13 @@ ready(() => {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
+            // Get the current user documents.
             currentUser = db.collection("users").doc(user.uid)
             currentUser.collection("playlists")
             .get()
             .then(allPlaylists => {
                 allPlaylists.forEach(element => {
+                    // Adding the playlists to the DOM to be displayed for the user.
                     const template = document.querySelector("#playlist-template");
     
                     let name = element.data().name;
@@ -70,6 +74,8 @@ ready(() => {
     
                     localStorage.setItem(name, trackUrl);
     
+                    // Using the template html element to set
+                    // the format for each of the playlist cards. 
                     let newEle = template.content.cloneNode(true);
                     newEle.querySelector(".playlist-name").textContent = name;
                     newEle.querySelector(".playlist-image").src = imageUrl;
@@ -92,7 +98,8 @@ ready(() => {
 });
 
 /**
- * writing the playlist info to the db
+ * Writing the playlist info to the db.
+ * Create a new document for each playlist or over write the existing one.
  */
 const writePlaylists = (name, data) => {
     firebase.auth().onAuthStateChanged(user => {

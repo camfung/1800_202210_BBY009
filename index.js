@@ -8,27 +8,34 @@ const qs = require("querystring");
 const { Configuration, OpenAIApi } = require("openai");
 
 const openai = require("openai");
-const { send } = require("process");
-
 
 let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
-CLIENT_SECRET = "
-";
+CLIENT_SECRET = "00fd5784702d444cbe115553c19bb005";
+OPEN_AI_KEY = "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"; 
 
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
 
+/*
+ * Setting up Axios.
+ */
 axios.defaults.baseURL = 'https://api.spotify.com/v1';
 axios.defaults.headers['Authorization'] = `Bearer ${access_token}`;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
+/*
+ * public directories for the client.
+ */
 app.use("/scripts", express.static("./scripts"));
 app.use("/styles", express.static("./styles"));
 app.use("/images", express.static("./images"));
 
+/**
+ * Base url route
+ */
 app.get("/", (req, res) => {
     sendHtml("index", res);
 })
@@ -37,10 +44,16 @@ app.get("/index", (req, res) => {
   sendHtml("index", res);
 })
 
+/**
+ * FireBase login route
+ */
 app.get("/login", (req, res) => {
     sendHtml("login", res)
 })
 
+/**
+ * Main page route
+ */
 app.get("/main" , (req, res) => {
     sendHtml("main", res);
 })
@@ -108,10 +121,9 @@ app.get("/main" , (req, res) => {
         });
     });
 
-app.get("/access_token", (req, res) => {
-  res.send(access_token)
-})
-
+/**
+ * Requesting playlists from spotify after getting access to the users account. 
+ */
 app.get("/getPlaylists", (req, res) => {
     axios({
         method: 'get',
@@ -122,6 +134,8 @@ app.get("/getPlaylists", (req, res) => {
         }
     })
     .then(response => {
+      // processing the response from the spotify api and putting into json
+      // to send to the client side. 
         let data = [];
         let numItems = Object.keys(response.data.items).length
         
@@ -139,24 +153,19 @@ app.get("/getPlaylists", (req, res) => {
     })
 })
 
+/**
+ * Route to get the single playlist page. 
+ */
 app.get("/playlist-view", (req, res) => {
   sendHtml("playlist", res);
 })
 
-app.get("/tester", (req, res) => {
-  let doc = [
-    [
-      './images/aiImages/image_1669764001811_0.png',
-      './images/aiImages/image_1669764001811_1.png',
-      './images/aiImages/image_1669764001811_2.png',
-      './images/aiImages/image_1669764001811_3.png'
-    ],
-    'Playground Lose Someone Westcoast Collective Figure It Out Lose Someone album cover'
-  ]
-  res.send(doc)
-})
-
-app.get("/playlist-tracks", (req, res) => {
+/**
+ * Route to get the tracks of the playlist that the user selected. 
+ * uses the tracks to generate an image from the openai api.
+ * param: spotify api end point of the requested playlist. 
+ */
+app.get("/generate-image", (req, res) => {
   // sendHtml("playlist", res)
   let href = req.query.href
   axios({
@@ -169,6 +178,9 @@ app.get("/playlist-tracks", (req, res) => {
     }
   })
   .then( async response => {
+    /*
+    prcessing the songs from spotify and choosing 5 at random to send to the openAI Dalle api.
+    */
     data = [];
     let numSongs = response.data.items.length;
     for (let i = 0 ; i < numSongs; i++){
@@ -184,18 +196,27 @@ app.get("/playlist-tracks", (req, res) => {
     console.log(prompt)
     prompt += "album cover"
 
-    let key = "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";
+    /*
+     * Configuring the connection with the dalle api.
+     * must set the access token that was assigned to me from openai.
+     */
+    let key = OPEN_AI_KEY;
     const configuration = new Configuration({
       apiKey: key
   });
   const openai = new OpenAIApi(configuration);
 
   predict(prompt, openai)
+    // promise retured from the predict function
+    // that will process the images sent from openai.
     .then(
         response => {
             const now = Date.now();
             let images = [];
             let filenames = [];
+            // Converting each song from open ai and sending to the client.
+            // Sending the local location of the image to the client to then fetch
+            // from the file system locally. 
             for (let i = 0; i < response.data.length; i++)
             {
                 const b64 = response.data[i]['b64_json'];
@@ -219,12 +240,17 @@ app.get("/playlist-tracks", (req, res) => {
 
 })
 
-
+/**
+ * helper function to call the openai api. 
+ * @param prompt the prompt to be given to the api. 
+ * @param openai the config object that gets me access to the api.  
+ * @returns a promise of data from openai with the requested images. 
+ */
 const predict = async function (prompt, openai) {
   const response = await openai.createImage({
     prompt: prompt,
     n: 4,
-    size: "1024x1024",
+    size: "256x256",
     // size: "1024x1024",
     response_format: 'b64_json',
   });
@@ -232,11 +258,20 @@ const predict = async function (prompt, openai) {
   return response.data;
 }
 
+/**
+ * Helper function that sends an html page to the client.
+ * @param url the local location of the requested page. 
+ * @param res the response object for the callback. 
+ */
 let sendHtml = (url, res) => {
     let doc = fs.readFileSync("html/" + url + ".html", "utf-8");
     res.send(doc);
 }
-
+/**
+ * Helper function that generates a random number in a given range. 
+ * @param max max number inclusive.  
+ * @returns a random number from 0 to max inclusive. 
+ */
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -255,7 +290,9 @@ function getRandomInt(max) {
     return text;
   };
 
-
+/**
+ * listening on local host 8000
+ */
 let port = 8000;
 app.listen(port, () => {
     console.log("server running on http://localhost:" + port)

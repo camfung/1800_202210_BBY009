@@ -19,12 +19,13 @@
 
 body {
     background-color: rgb(34, 37, 41);
+    height: 90vh;
 }
 
 .index-wrapper {
     display: grid;
     grid-template-rows: 5fr 1fr;
-    height: 100vh;
+
 }
 
 .header {
@@ -198,15 +199,16 @@ header a {
 @media only screen and (min-width: 768px) {
     .playlist {
         width: 24%;
-    
     }
 
 }
 
 @media only screen and (max-width: 768px) {
+    #index-wrapper {
+        height: 90vh; 
+    }
     .playlist {
         width: 47%;
-
     }
 
     nav {
@@ -247,6 +249,13 @@ header a {
 
     #load-image {
         text-align: center;
+    }
+    #index-wrapper {
+        padding-bottom: 20%;
+    }
+
+    #login-button {
+        color: black;
     }
 }
 
