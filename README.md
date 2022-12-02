@@ -83,7 +83,10 @@ The way that I am generating the images is by saving them locally in a folder. T
 I would solve this problem by setting up cloud storage in firebase. This would let the client to make requests to the database to get the images. This was not implemented due to time restraints. 
 
 ## Conclusion
-I successfully got this app to run on localhost but was unable to deploy it. This is very disopointing because I really want to be able to let people use it so that they can understand how powerful ai image generation has become. I will continue development on this project and maybe soon it will be deployed and able to be used. 
-For now it is a proof of concept that this sort of thing can be done and is a cool way for the spotify users to further customize their experience. I learned so much about communicating with apis and am very happy that I took on such a challenging project. 
+I successfully got this app to run on localhost but was unable to deploy it. This is very disopointing because I really want to be able to let people use it so that they can understand how powerful ai image generation has become. 
+
+I will continue development on this project and maybe soon it will be deployed and able to be used. 
+For now it is a proof of concept that this sort of thing can be done and is a cool way for the spotify users to further customize their experience. I learned so much about communicating with apis and am very happy that I took on such a challenging project.
+
 Something that I wish that I could change is that I was unaware that we would be using the firebase service. If i had known this I would have been able to take this into account when designing the architecture of my app. I think that I would've been able to find a way to create a prototype that is able to be deployed for others to use. 
 Overall this was a great experience to understand the software planning, design and implmentation process. 
