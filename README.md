@@ -34,6 +34,7 @@ Content of the project folder:
 
 
 It has the following subfolders and files:
+
 ├── html folder              # holds all the html files used in the project.
 index.html                   # landing page of the site.
 login.html                   # login to the firebase backend.
