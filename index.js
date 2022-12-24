@@ -9,12 +9,15 @@ const { Configuration, OpenAIApi } = require("openai");
 
 const openai = require("openai");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 let access_token = null;
 const authorize = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token"
 CLIENT_ID = "8185081e41dd43d98ce0316fb6b109b1";
-CLIENT_SECRET = "";
-OPEN_AI_KEY = ""; 
+CLIENT_SECRET = process.env.spotifyKey;
+OPEN_AI_KEY = process.env.openAiKey; 
 
 REDIRECT_URI = "http://localhost:8000/callback";
 const stateKey = 'spotify_auth_state';
@@ -29,9 +32,9 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 /*
  * public directories for the client.
  */
-app.use("/scripts", express.static("./scripts"));
-app.use("/styles", express.static("./styles"));
-app.use("/images", express.static("./images"));
+app.use("/scripts", express.static("./public/scripts"));
+app.use("/styles", express.static("./public/styles"));
+app.use("/images", express.static("./public/images"));
 
 /**
  * Base url route
@@ -78,7 +81,6 @@ app.get("/main" , (req, res) => {
     let data = {
         url: authorize + "?" + queryParams
     }
-    console.log("/spotify login")
     res.send(data);
 })
 
@@ -89,7 +91,7 @@ app.get("/main" , (req, res) => {
  */
  app.get("/callback", (req, res) => {
     const code = req.query.code || null;
-    console.log("code " + code)
+    // console.log("code " + code)
     axios({
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
@@ -106,17 +108,15 @@ app.get("/main" , (req, res) => {
         .then(response => {
           if (response.status === 200) {
             access_token = response.data.access_token;
-            console.log("access token " + response.data.access_token)
+            // console.log("access token " + response.data.access_token)
             sendHtml("main", res)
-
-            
-
         } else {
 
             res.send(response);
           }
         })
         .catch(error => {
+          console.log(error)
           res.send(error);
         });
     });
